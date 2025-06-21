@@ -1,0 +1,10 @@
+# ===============================================================
+# FILE: requirements.txt
+# (Liệt kê các thư viện Python cần thiết để ứng dụng hoạt động)
+# ===============================================================
+Flask
+Flask-SQLAlchemy
+Flask-Migrate
+psycopg2-binary
+gunicorn
+
