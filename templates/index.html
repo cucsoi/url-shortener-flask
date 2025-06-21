@@ -1,5 +1,6 @@
 <!-- =============================================================== -->
 <!-- FILE: templates/index.html -->
+<!-- (*** NỘI DUNG ĐÃ ĐƯỢC CẬP NHẬT ***) -->
 <!-- =============================================================== -->
 <!DOCTYPE html>
 <html lang="vi">
@@ -20,8 +21,6 @@
     <div class="container mt-5">
         <div class="card p-4">
             <h1 class="text-center mb-4">Trình Rút Gọn URL Siêu Tốc</h1>
-
-            <!-- Hiển thị thông báo (flash messages) -->
             {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
                 {% for category, message in messages %}
@@ -32,7 +31,6 @@
                 {% endfor %}
               {% endif %}
             {% endwith %}
-
             <form method="post" class="mb-3">
                 <div class="mb-3">
                     <label for="original_url" class="form-label">URL Gốc</label>
@@ -49,7 +47,6 @@
                     <button type="submit" class="btn btn-primary btn-lg">Rút Gọn!</button>
                 </div>
             </form>
-
             {% if short_url %}
                 <hr>
                 <h4 class="text-center">Link của bạn đã sẵn sàng!</h4>
@@ -64,16 +61,34 @@
             <p>Xây dựng với Flask & Render.com</p>
         </footer>
     </div>
-
     <script src="[https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js](https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js)"></script>
     <script>
         function copyToClipboard() {
             const urlText = document.getElementById('short-url-text').innerText;
-            navigator.clipboard.writeText(urlText).then(function() {
-                alert('Đã sao chép link vào clipboard!');
-            }, function(err) {
-                alert('Lỗi khi sao chép: ', err);
-            });
+            // Use modern clipboard API first
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(urlText).then(function() {
+                    alert('Đã sao chép link vào clipboard!');
+                }, function(err) {
+                    console.error('Lỗi khi sao chép: ', err);
+                    alert('Không thể tự động sao chép.');
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = urlText;
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('Đã sao chép link vào clipboard!');
+                } catch (err) {
+                    console.error('Lỗi khi sao chép bằng execCommand: ', err);
+                    alert('Không thể tự động sao chép.');
+                }
+                document.body.removeChild(textArea);
+            }
         }
     </script>
 </body>
