@@ -1,6 +1,6 @@
 # ===============================================================
 # FILE: render-build.sh
-# (Script để Render.com tự động chạy khi xây dựng ứng dụng)
+# (*** NỘI DUNG ĐÃ ĐƯỢC CẬP NHẬT ***)
 # ===============================================================
 #!/usr/bin/env bash
 # exit on error
@@ -8,4 +8,6 @@ set -o errexit
 
 pip install -r requirements.txt
 
-python -m flask db upgrade
+# Chạy lệnh create-db đã được định nghĩa trong app.py
+# để tạo bảng trực tiếp, đơn giản hơn cho việc triển khai ban đầu.
+python -m flask create-db
